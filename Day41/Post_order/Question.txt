@@ -1,0 +1,16 @@
+Given a binary tree, return the postorder traversal of its nodes’ values.
+
+Example :
+
+Given binary tree
+
+   1
+    \
+     2
+    /
+   3
+return [3,2,1].
+
+Using recursion is not allowed.
+
+Seen this question in a real interview before
