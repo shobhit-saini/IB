@@ -8,29 +8,30 @@
  */
 void Solution::connect(TreeLinkNode* A) {
     queue<TreeLinkNode*> q;
-    int flag = 0, flag1 = 0;
+    int count2 = 1, count1 = 1;
     TreeLinkNode* ptr;
     q.push(A);
-    A->next = NULL;
-    while(!q.empty())
+    while(count2 != 0)
     {
-        ptr = q.front();
-        q.pop();
-        if(ptr->left != NULL)
+        count2 = 0;
+        while(count1 != 0 )
         {
-            q.push(ptr->left);
-            flag = 1;
+            count1--;
+            ptr = q.front();
+            q.pop();
+            if(ptr->left != NULL)
+            {
+                q.push(ptr->left);
+                count2++;
+            }
+            if(ptr->right != NULL)
+            {
+                q.push(ptr->right);
+                count2++;
+            }
+            if(count1 > 0)
+                ptr->next = q.front(); 
         }
-        if(ptr->right != NULL)
-        {
-            q.push(ptr->right);
-            ptr->right->next = NULL;
-            flag1 = 1;
-            if(flag == 1)
-                ptr->left ->next = ptr->right; 
-        }
-        if(flag1 == 0)
-            ptr->left->next = NULL;
-        flag = 0; flag1 = 0;
+        count1 = count2;
     }
 }
