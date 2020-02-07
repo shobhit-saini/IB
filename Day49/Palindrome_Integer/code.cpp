@@ -1,5 +1,9 @@
 int Solution::isPalindrome(int A) {
     int temp = A, count = 0;
+    if(A < 0)
+    {
+        return 0;
+    }
     if(A /10 <= 0)
     {
         return 1;
@@ -12,7 +16,7 @@ int Solution::isPalindrome(int A) {
     int i = count-1;
     int j = 1;
     temp = A;
-    while(i != j)
+    while(i >= j)
     {
         
         int var = pow(10,1);
