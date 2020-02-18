@@ -39,19 +39,7 @@ Explaination 2:
 */
 /*
 vector<int> Solution::prevSmaller(vector<int> &A) {
-    
-   // stack<int> s;
-   // s.push(A[0]);
-   /* for(i = 1; i < A.size(); i++)
-    {
-        if(A[i] <= A[i-1])
-            s.push(A[i]);
-    }
-    for(j = A.size()-1; j > 0; j--)
-    {
-        
-    }*/
-    vector<int> G;
+    /*vector<int> G;
     int min, i, j;
     G.push_back(-1);
     for(i = 1; i < A.size(); i++)
@@ -63,6 +51,20 @@ vector<int> Solution::prevSmaller(vector<int> &A) {
                 min = A[j];
         }
         G.push_back(min);
+    }
+    return G;*/
+    int i;
+    vector<int> G;
+    stack<int> s;
+    s.push(-1);
+    for(i = 0; i < A.size(); i++)
+    {
+        while(A[i] <= s.top())
+        {
+            s.pop();
+        }
+        G.push_back(s.top());
+        s.push(A[i]);
     }
     return G;
 }
