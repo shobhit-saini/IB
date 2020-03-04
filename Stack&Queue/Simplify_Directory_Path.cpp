@@ -32,26 +32,30 @@ Seen this question in a real interview before
 */
 string Solution::simplifyPath(string A) {
     int i = 0;
-    string str, temp, str1;
-    stack<char>s;
+    string str = "", temp = "";
+    stack<string>s, s1;
     while(i < A.size())
     {
         if((A[i] >= 97 && A[i] <= 122))
         {
-            s.push(A[i]);
-        }
-        else if(A[i] == '/')
-        {
-            if(s.empty())
+            while((A[i] >= 97 && A[i] <= 122) )
             {
-                s.push('/');
+                temp = temp + A[i];
+                i++;
+               // s.push(A[i]);
             }
-            else if(s.top() != '/')
+            if(i == A.size())
             {
-                s.push('/');
-                while(A[i] == '/')
-                    i++;
-                i--;
+                s.push(temp);
+            }
+            i--;
+        }
+        else if(A[i] == '/' || i == A.size())
+        {
+            if(temp != "")
+            {
+                s.push(temp);
+                temp = "";
             }
         }
         else if(A[i] == '.' &&  A[i+1] == '.')
@@ -59,25 +63,25 @@ string Solution::simplifyPath(string A) {
             if(!s.empty())
             {
                 s.pop();
-                while(!s.empty() && s.top() != '/')
-                    s.pop();
-                
             }
             i++;
         }
         i++;
     }
-    if(!s.empty() && s.top() == '/')
-        s.pop();
     if(s.empty())
-        s.push('/');
+    {
+        str = str + '/';
+        return str;
+    }
     while(!s.empty())
     {
-        temp = s.top();
-        str = str + temp;
+        s1.push(s.top());
         s.pop();
     }
-    
-    reverse(str.begin(), str.end());
+    while(!s1.empty())
+    {
+        str = str + '/';
+        str = str + s1.top();
+        s1.pop();
+    }
     return str;
-}
