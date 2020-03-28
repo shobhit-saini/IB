@@ -27,7 +27,6 @@ vector<int> Solution::solve(vector<int> &A, vector<int> &B) {
         for(j = 0; j < B.size(); j++)
         {
             sum = A[i] + B[j];
-           // cout << "{" << sum << "}";
             mp.insert(make_pair(sum, 1));
         }
     }
