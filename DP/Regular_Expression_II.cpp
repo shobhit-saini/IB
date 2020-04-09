@@ -23,18 +23,20 @@ Return 0 / 1 ( 0 for false, 1 for true ) for this problem
 */
 int Solution::isMatch(const string A, const string B) {
     
-    int size1 = A.size() , size2 = B.size() , i , j , dp[size1 + 1][size2 + 1] ;
-    dp[0][0] = 1 ;
-    for( i = 1 ; i <= size2 ; i++ )
+    int size1 = A.size() , size2 = B.size() , i , j ; 
+    bool dp[size1 + 1][size2 + 1] ;
+    dp[0][0] = true ;
+    dp[0][1] = false ;
+    for( i = 2 ; i <= size2 ; i++ )
     {
         if( B[i - 1] == '*' )
             dp[0][i] = dp[0][i - 2] ;
         else
-            dp[0][i] = 0 ;
+           dp[0][i] = false ;
     }
     for( i = 1 ; i <= size1 ; i++ )
     {
-        dp[i][0] =  0 ; 
+        dp[i][0] =  false ; 
     }
     for( i = 1 ; i <= size1 ; i++ )
     {
@@ -50,9 +52,10 @@ int Solution::isMatch(const string A, const string B) {
             }
                 
             else
-                dp[i][j] = 0 ;
+                dp[i][j] = false ;
             
         }
     }
     return dp[size1][size2] ;
 }
+
