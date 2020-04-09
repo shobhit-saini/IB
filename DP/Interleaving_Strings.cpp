@@ -41,49 +41,75 @@ Seen this question in a real interview before
 */
 int Solution::isInterleave(string A, string B, string C) {
     
-    int size1 = A.size() , size2 = B.size() , size3 = C.size() , i , j , flag = 0 ;
-    j = 0 ;
-    multimap<int , int> mp1 , mp2 ;
-    for( i = 0 ; i < size3 ; i++ )
-    {
-        if( A[j] == C[i] )
+    int size1 = s1.size() , size2 = s2.size() , size3 = s3.size() , i , j = 0 , dp[size1 + 1][size2 + 1];
+        if( size1 == 0 && size2 == 0 && size3 == 0 )
+            return 1 ; 
+        if( (size1 + size2) != size3 )
+            return 0;
+        
+        dp[0][0] = 1 ;
+        
+        j = 0;
+        for( i = 1 ; i <= size2 ; i++ )
         {
-            mp1.insert(make_pair(A[j] , 1));
-            j++ ;
-            if( j == size1 )
+            if( s3[j] == s2[i - 1] )
             {
-                flag = 1 ;
-                break ;
+                dp[0][i] = dp[0][i - 1] ;
+            }
+            else
+            {
+                dp[0][i] = 0 ;
+            }
+            j++;
+        }
+        
+        j = 0 ;
+        for( i = 1 ; i <= size1 ; i++ )
+        {
+            if( s3[j] == s1[i - 1] )
+            {
+                dp[i][0] = dp[i - 1][0] ;
+            }
+            else
+            {
+                dp[i][0] = 0 ;
+            }
+            j++ ;
+        }
+        
+        int k ;
+        for( i = 1 ; i <= size1 ; i++ )
+        {
+            k = i ;
+            for( j = 1 ; j <= size2 ; j++ )
+            {
+                if( s1[i - 1] == s3[k] && s2[j - 1] == s3[k] )
+                {
+                    dp[i][j] = dp[i - 1][j] || dp[i][j - 1] ;
+                }
+                else if( s1[i - 1] == s3[k] )
+                {
+                    dp[i][j] = dp[i - 1][j] ;
+                }
+                else if( s2[j - 1] == s3[k] )
+                {
+                    dp[i][j] = dp[i][j - 1] ;
+                }
+                else
+                {
+                    dp[i][j] = 0 ;
+                }
+                k++ ;
             }
         }
-    }
-    if( flag == 0 )
-        return 0 ;
-    
-    j = 0 ;
-    flag = 0 ;
-    for( i = 0 ; i < size3 ; i++ )
-    {
-        if( B[j] == C[i] )
+        for( i = 0 ; i <= size1 ; i++ )
         {
-            mp1.insert(make_pair(B[j] , 1));
-            j++ ;
-            if( j == size2 )
+            for( j = 0 ; j <= size2 ; j++ )
             {
-                flag = 1 ;
-                break ;
+                cout << dp[i][j] << " " ;
             }
+            cout << "\n" ;
         }
-    } 
-    if( flag == 0 )
-        return 0 ;
-
-    for( i = 0 ; i < size3 ; i++ )
-    {
-        mp2.insert(make_pair(C[j] , 1));
-    }
-    if( mp1.size() == mp2.size() )
-        return 1;
-    return 0;
+        return dp[size1][size2] ;
     
 }
